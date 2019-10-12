@@ -1,6 +1,6 @@
 import java.security.MessageDigest;
 
-public class Hashing {
+public class Encode {
 	public static String SHA256(String input) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
