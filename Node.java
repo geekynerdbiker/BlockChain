@@ -17,7 +17,7 @@ public class Node {
 	}
 	
 	public long getTimeStamp() {
-		return timeStamp;ㄴ
+		return timeStamp;
 	}
 }
 
