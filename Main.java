@@ -4,14 +4,18 @@
 // ++ Add mining function on Node.java
 // Encode.java contains SHA-264 algorithm and MessageDigest Method.
 
-import java.util.ArrayList;
+import java.util.*;
+import java.security.*;
 import com.google.gson.GsonBuilder;
 
 public class Main {
 	public static final ArrayList<Node> blockchain = new ArrayList<Node>();
 	public static int difficulty = 5;
+	public static Wallet walletA;
+	public static Wallet walletB;
 	
 	public static void main(String[] args) {
+		// Show mining step
 		// Add our blocks to the blockchain ArrayList:
 		blockchain.add(new Node("This is genesis node.", "0"));
 		System.out.println("Trying to mine Blcok 1");
@@ -27,9 +31,30 @@ public class Main {
 		
 		System.out.println("\nBlockchain is Vaild: " + isChainValid());
 	
+		// Show Chain
 		String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);		
 		System.out.println("\0\0 The Blockchain : ");
 		System.out.println(blockchainJson);
+		
+		//Setup Bouncey castle as a Security Provider
+		Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); 
+		
+		//Create the new wallets
+		walletA = new Wallet();
+		walletB = new Wallet();
+		
+		//Test public and private keys
+		System.out.println("Private and public keys:");
+		System.out.println(StringUtil.getStringFromKey(walletA.prKey));
+		System.out.println(StringUtil.getStringFromKey(walletA.pbKey));
+		
+		//Create a test transaction from WalletA to walletB 
+		Transaction transaction = new Transaction(walletA.pbKey, walletB.pbKey, 5, null);
+		transaction.generateSignature(walletA.prKey);
+		
+		//Verify the signature works and verify it from the public key
+		System.out.println("Is signature verified");
+		System.out.println(transaction.verifiySignature());
 	}
 	
 	public static Boolean isChainValid() {	// Check Node is edited
