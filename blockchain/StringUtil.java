@@ -1,4 +1,4 @@
-package BlockChain;
+package blockchain;
 import java.util.*;
 import java.security.*;
 

@@ -1,4 +1,4 @@
-package BlockChain;
+package blockchain;
 
 // Use one-way Linked List: default
 import java.util.*;
